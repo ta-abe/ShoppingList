@@ -94,7 +94,7 @@ public class ShoppingListServlet extends HttpServlet{
 		/*  指定されたUUIDのデータを入力された値に更新し、更新日時を付与する*/
 
 		Goods goods;
-		goods = new Goods(uuid,name,number,memo);
+		goods = new Goods(uuid, name, number, memo);
 		ShoppingListTable tbl;
 		tbl = new ShoppingListTable();
 		try {

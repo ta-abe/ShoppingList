@@ -15,13 +15,13 @@ public class ShoppingListTable {
 	public Statement stm;
 	public ResultSet rs;
 	Connection con = null;
+	String url = "jdbc:mysql://localhost:3306/sample";
+	String user = "root";
+	String pass = "8121";
 
 	ShoppingListTable(){
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			String url = "jdbc:mysql://localhost:3306/sample";
-			String user = "root";
-			String pass = "8121";
 			con = DriverManager.getConnection(url,user,pass);
 			con.setAutoCommit(false);//トランザクション開始
 			this.stm = con.createStatement();
@@ -102,16 +102,23 @@ public class ShoppingListTable {
 		Integer number = goods.getNumber();
 		String memo = goods.getMemo();
 		String sql = "insert into shoppinglist(uuid,item,num,memo,registered_datetime)values(?,?,?,?,cast(now() as datetime))";
-		PreparedStatement pst = con.prepareStatement(sql);
-		pst.setString(1, uuid);
-		pst.setString(2, name);
-		pst.setInt(3, number);
-		pst.setString(4, memo);
-		pst.executeUpdate();
-		con.commit();//トランザクションをコミット
-		pst.close();
-		con.close();
-		stm.close();
+		Connection conn = null;
+		PreparedStatement pst = null;
+		try{
+			conn = DriverManager.getConnection(url,user,pass);
+			pst = con.prepareStatement(sql);
+			pst.setString(1, uuid);
+			pst.setString(2, name);
+			pst.setInt(3, number);
+			pst.setString(4, memo);
+			pst.executeUpdate();
+			conn.commit();//トランザクションをコミット
+		}catch(SQLException e){
+			conn.rollback();
+		}finally{
+			pst.close();
+			con.close();
+		}
 	}
 
 	public void update(Goods goods) throws SQLException{

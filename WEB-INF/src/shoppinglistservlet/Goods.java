@@ -19,7 +19,7 @@ public class Goods {
 
 	}
 
-	 Goods(String uuid,String name ,Integer number ,String memo){
+	 Goods(String uuid , String name , Integer number , String memo){
 		this.uuid = uuid;
 		this.name = name;
 		this.number = number;
@@ -27,8 +27,7 @@ public class Goods {
 
 	}
 
-	Goods(String uuid, String name ,Integer number,String memo,Date rdate,
-			Date pdate,Date udate){
+	Goods(String uuid , String name , Integer number , String memo , Date rdate, Date pdate , Date udate){
 		this.uuid = uuid;
 		this.name = name;
 		this.number = number;
