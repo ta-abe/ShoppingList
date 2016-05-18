@@ -16,15 +16,13 @@ public class Goods {
 		this.name = name;
 		this.number = number;
 		this.memo = memo;
-
 	}
 
-	 Goods(String uuid , String name , Integer number , String memo){
+	Goods(String uuid , String name , Integer number , String memo){
 		this.uuid = uuid;
 		this.name = name;
 		this.number = number;
 		this.memo = memo;
-
 	}
 
 	Goods(String uuid , String name , Integer number , String memo , Date rdate, Date pdate , Date udate){
@@ -43,7 +41,6 @@ public class Goods {
 
 	public String getName(){
 		return name;
-
 	}
 
 	public Integer getNumber(){
@@ -65,5 +62,4 @@ public class Goods {
 	public Date getUpdateDatetime(){
 		return updateDatetime;
 	}
-
 }

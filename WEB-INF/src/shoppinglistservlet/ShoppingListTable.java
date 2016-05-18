@@ -10,115 +10,149 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class ShoppingListTable {
-	public Statement stm;
-	public ResultSet rs;
-	Connection con = null;
 	String url = "jdbc:mysql://localhost:3306/sample";
 	String user = "root";
 	String pass = "8121";
 
-	ShoppingListTable(){
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection(url,user,pass);
-			con.setAutoCommit(false);//トランザクション開始
-			this.stm = con.createStatement();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public List<Goods> getAll() throws SQLException{
-		String sql = "select * from shoppinglist order by REGISTERED_DATETIME desc";
-		rs = stm.executeQuery(sql);
-		ArrayList<Goods>  array = new ArrayList<Goods>();
-		while(rs.next()){
-			String uuid = rs.getString("UUID");
-			String name = rs.getString("ITEM");
-			Integer num = rs.getInt("num");
-			String memo = rs.getString("MEMO");
-			Date rdate = rs.getDate("REGISTERED_DATETIME");
-			Date pdate = rs.getDate("PURCHASED_DATETIME");
-			Date udate = rs.getDate("UPDATED_DATETIME");
-			Goods goods;
-			goods = new Goods(uuid,name,num,memo,rdate,pdate,udate);
-			array.add(goods);
+		String sql = "SELECT * FROM SHOPPINGLIST ORDER BY REGISTERED_DATETIME DESC";
+		Connection conn = null;
+		Statement stm = null;
+		ResultSet rs = null;
+		ArrayList<Goods> array = new ArrayList<Goods>();
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url , user , pass);;
+			conn.setAutoCommit(false);//トランザクション開始
+			stm = conn.createStatement();
+			rs = stm.executeQuery(sql);
+			while(rs.next()){
+				String uuid = rs.getString("UUID");
+				String name = rs.getString("ITEM");
+				Integer num = rs.getInt("NUMBER");
+				String memo = rs.getString("MEMO");
+				Date rdate = rs.getDate("REGISTERED_DATETIME");
+				Date pdate = rs.getDate("PURCHASED_DATETIME");
+				Date udate = rs.getDate("UPDATED_DATETIME");
+				Goods goods;
+				goods = new Goods(uuid , name , num , memo , rdate , pdate , udate);
+				array.add(goods);
+			}
+			conn.commit();
+		}catch(SQLException e){
+			e.printStackTrace();
+			conn.rollback();
+		} catch (ClassNotFoundException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}finally{
+			rs.close();
+			stm.close();
+			conn.close();
 		}
-		rs.close();
-		stm.close();
-		con.close();
 		return array;
 	}
 
 	public List<Goods> getAllYetPurchased() throws SQLException{
 		String sql = "select * from shoppinglist where PURCHASED_DATETIME  is null order by REGISTERED_DATETIME desc";
-		rs = stm.executeQuery(sql);
+		Connection conn = null;
+		Statement stm = null;
+		ResultSet rs = null;
 		ArrayList<Goods>  array = new ArrayList<Goods>();
-		while(rs.next()){
-			String uuid = rs.getString("UUID");
-			String name = rs.getString("ITEM");
-			Integer num = rs.getInt("num");
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url,user,pass);
+			stm = conn.createStatement();
+			rs = stm.executeQuery(sql);
+			while(rs.next()){
+				String uuid = rs.getString("UUID");
+				String name = rs.getString("ITEM");
+				Integer num = rs.getInt("NUMBER");
+				String memo = rs.getString("MEMO");
+				Date rdate = rs.getDate("REGISTERED_DATETIME");
+				Date pdate = rs.getDate("PURCHASED_DATETIME");
+				Date udate = rs.getDate("UPDATED_DATETIME");
+				Goods goods;
+				goods = new Goods(uuid , name , num , memo , rdate , pdate , udate);
+				array.add(goods);
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+			conn.rollback();
+		} catch (ClassNotFoundException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}finally{
+			rs.close();
+			stm.close();
+			conn.close();
+		}
+		return array;
+	}
+
+	public Goods get(String uuid) throws SQLException{
+		String sql = "SELECT * FROM SHOPPINGLIST WHERE UUID = '" + uuid + "'";
+		Connection conn = null;
+		Statement stm = null;
+		ResultSet rs = null;
+		Goods goods = null;
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url,user,pass);
+			stm = conn.createStatement();
+			rs = stm.executeQuery(sql);
+			rs.next();
+			String item = rs.getString("ITEM");
+			Integer num = rs.getInt("NUMBER");
 			String memo = rs.getString("MEMO");
 			Date rdate = rs.getDate("REGISTERED_DATETIME");
 			Date pdate = rs.getDate("PURCHASED_DATETIME");
 			Date udate = rs.getDate("UPDATED_DATETIME");
-			Goods goods;
-			goods = new Goods(uuid,name,num,memo,rdate,pdate,udate);
-			array.add(goods);
+			goods = new Goods(uuid , item , num , memo , rdate , pdate , udate);
+		}catch(SQLException e){
+			e.printStackTrace();
+		}catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}finally{
+			rs.close();
+			stm.close();
+			conn.close();
 		}
-		rs.close();
-		stm.close();
-		con.close();
-		return array;
-	}
-
-
-	public Goods get(String uuid) throws SQLException{
-		String sql = "select * from shoppinglist where UUID =  '"+ uuid  + "'";
-		rs = stm.executeQuery(sql);
-		rs.next();
-		String item = rs.getString("ITEM");
-		Integer num = rs.getInt("NUM");
-		String memo = rs.getString("memo");
-		Date rdate = rs.getDate("REGISTERED_DATETIME");
-		Date pdate = rs.getDate("PURCHASED_DATETIME");
-		Date udate = rs.getDate("UPDATED_DATETIME");
-		Goods goods;
-		goods = new Goods(uuid,item,num,memo,rdate,pdate,udate);
-		rs.close();
-		stm.close();
-		con.close();
 		return goods;
-
 	}
 
-	public void add(Goods goods) throws SQLException{
+	public Goods add(Goods goods) throws SQLException{
 		String uuid = goods.getUuid();
 		String name = goods.getName();
 		Integer number = goods.getNumber();
 		String memo = goods.getMemo();
-		String sql = "insert into shoppinglist(uuid,item,num,memo,registered_datetime)values(?,?,?,?,cast(now() as datetime))";
+		String sql = "INSERT INTO SHOPPINGLIST(UUID , ITEM , NUMBER , MEMO , REGISTERED_DATETIME)VALUES(? , ? , ? , ? , CAST(NOW() AS DATETIME))";
 		Connection conn = null;
 		PreparedStatement pst = null;
+		
 		try{
-			conn = DriverManager.getConnection(url,user,pass);
-			pst = con.prepareStatement(sql);
-			pst.setString(1, uuid);
-			pst.setString(2, name);
-			pst.setInt(3, number);
-			pst.setString(4, memo);
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url , user , pass);
+			conn.setAutoCommit(false);//トランザクション開始
+			pst = conn.prepareStatement(sql);
+			pst.setString(1 , uuid);
+			pst.setString(2 , name);
+			pst.setInt(3 , number);
+			pst.setString(4 , memo);
 			pst.executeUpdate();
 			conn.commit();//トランザクションをコミット
 		}catch(SQLException e){
+			e.printStackTrace();
 			conn.rollback();
+		} catch (ClassNotFoundException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
 		}finally{
 			pst.close();
-			con.close();
+			conn.close();
 		}
+		return goods;
 	}
 
 	public void update(Goods goods) throws SQLException{
@@ -126,40 +160,77 @@ public class ShoppingListTable {
 		Integer number = goods.getNumber();
 		String memo = goods.getMemo();
 		String uuid = goods.getUuid();
-		String sql ="update shoppinglist set item =? , num =? , memo =? , updated_datetime = cast(now()as datetime) where uuid =?";
-		PreparedStatement pst = con.prepareStatement(sql);
-		pst.setString(1, name) ;
-		pst.setInt(2, number);
-		pst.setString(3,memo);
-		pst.setString(4, uuid);
-		pst.executeUpdate();
-		con.commit();//トランザクションをコミット
-		pst.close();
-		con.close();
-		stm.close();
+		Connection conn = null;
+		PreparedStatement pst = null;
+		try{
+			String sql = "UPDATE SHOPPINGLIST SET ITEM = ? , NUMBER = ? , MEMO = ? , UPDATED_DATETIME = CAST(NOW()AS DATETIME) WHERE UUID = ?";
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url , user , pass);
+			conn.setAutoCommit(false);
+			pst = conn.prepareStatement(sql);
+			pst.setString(1 , name) ;
+			pst.setInt(2 , number);
+			pst.setString(3 , memo);
+			pst.setString(4 , uuid);
+			pst.executeUpdate();
+			conn.commit();//トランザクションをコミット
+		}catch(SQLException e){
+			e.printStackTrace();
+			conn.rollback();//トランザクションのロールバック
+		} catch (ClassNotFoundException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}finally{
+			pst.close();
+			conn.close();
+		}
 	}
 
-
 	public void delete(String uuid) throws SQLException{
-		String sql = "delete from shoppinglist where uuid =?";
-		PreparedStatement pst = con.prepareStatement(sql);
-		pst.setString(1, uuid);
-		pst.executeUpdate();
-		con.commit();//トランザクションをコミット
-		pst.close();
-		con.close();
-		stm.close();
+		String sql = "DELETE FROM SHOPPINGLIST WHERE UUID =?";
+		Connection conn = null;
+		PreparedStatement pst = null;
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url , user , pass);
+			conn.setAutoCommit(false);
+			pst = conn.prepareStatement(sql);
+			pst.setString(1 , uuid);
+			pst.executeUpdate();
+			conn.commit();//トランザクションをコミット
+		}catch(SQLException e){
+			e.printStackTrace();
+			conn.rollback();
+		} catch (ClassNotFoundException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}finally{
+			pst.close();
+			conn.close();
+		}
 	}
 
 	public void purchase(String uuid) throws SQLException{
-		String sql = "update shoppinglist set purchased_datetime = cast(now()as datetime) where uuid =?";
-		PreparedStatement pst = con.prepareStatement(sql);
-		pst.setString(1, uuid);
-		pst.executeUpdate();
-		con.commit();//トランザクションをコミット
-		pst.close();
-		con.close();
-		stm.close();
+		String sql = "UPDATE SHOPPINGLIST SET PURCHASED_DATETIME = CAST(NOW()AS DATETIME) WHERE UUID =?";
+		Connection conn = null;
+		PreparedStatement pst = null;
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url , user , pass);
+			conn.setAutoCommit(false);
+			pst = conn.prepareStatement(sql);
+			pst.setString(1 , uuid);
+			pst.executeUpdate();
+			conn.commit();//トランザクションをコミット
+		}catch(SQLException e){
+			e.printStackTrace();
+			conn.rollback();
+		} catch (ClassNotFoundException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}finally{
+			pst.close();
+			conn.close();
+		}
 	}
-
 }
