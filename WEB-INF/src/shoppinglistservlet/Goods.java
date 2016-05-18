@@ -11,21 +11,21 @@ public class Goods {
 	private Date purchasedDatetime = null;
 	private Date updateDatetime = null;
 
-	Goods(String name ,Integer number ,String memo){
+	public Goods(String name , Integer number , String memo){
 		this.uuid = java.util.UUID.randomUUID().toString();
 		this.name = name;
 		this.number = number;
 		this.memo = memo;
 	}
 
-	Goods(String uuid , String name , Integer number , String memo){
+	public Goods(String uuid , String name , Integer number , String memo){
 		this.uuid = uuid;
 		this.name = name;
 		this.number = number;
 		this.memo = memo;
 	}
 
-	Goods(String uuid , String name , Integer number , String memo , Date rdate, Date pdate , Date udate){
+	public Goods(String uuid , String name , Integer number , String memo , Date rdate, Date pdate , Date udate){
 		this.uuid = uuid;
 		this.name = name;
 		this.number = number;

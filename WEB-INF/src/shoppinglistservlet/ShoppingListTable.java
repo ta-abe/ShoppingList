@@ -44,7 +44,6 @@ public class ShoppingListTable {
 			e.printStackTrace();
 			conn.rollback();
 		} catch (ClassNotFoundException e) {
-			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}finally{
 			rs.close();
@@ -81,7 +80,6 @@ public class ShoppingListTable {
 			e.printStackTrace();
 			conn.rollback();
 		} catch (ClassNotFoundException e) {
-			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}finally{
 			rs.close();
@@ -130,7 +128,7 @@ public class ShoppingListTable {
 		String sql = "INSERT INTO SHOPPINGLIST(UUID , ITEM , NUMBER , MEMO , REGISTERED_DATETIME)VALUES(? , ? , ? , ? , CAST(NOW() AS DATETIME))";
 		Connection conn = null;
 		PreparedStatement pst = null;
-		
+
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url , user , pass);
@@ -146,7 +144,6 @@ public class ShoppingListTable {
 			e.printStackTrace();
 			conn.rollback();
 		} catch (ClassNotFoundException e) {
-			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}finally{
 			pst.close();
@@ -162,29 +159,32 @@ public class ShoppingListTable {
 		String uuid = goods.getUuid();
 		Connection conn = null;
 		PreparedStatement pst = null;
-		try{
-			String sql = "UPDATE SHOPPINGLIST SET ITEM = ? , NUMBER = ? , MEMO = ? , UPDATED_DATETIME = CAST(NOW()AS DATETIME) WHERE UUID = ?";
-			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection(url , user , pass);
-			conn.setAutoCommit(false);
-			pst = conn.prepareStatement(sql);
-			pst.setString(1 , name) ;
-			pst.setInt(2 , number);
-			pst.setString(3 , memo);
-			pst.setString(4 , uuid);
-			pst.executeUpdate();
-			conn.commit();//トランザクションをコミット
-		}catch(SQLException e){
-			e.printStackTrace();
-			conn.rollback();//トランザクションのロールバック
-		} catch (ClassNotFoundException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}finally{
-			pst.close();
-			conn.close();
+		/*if(){
+
+		}else{*/
+			try{
+				String sql = "UPDATE SHOPPINGLIST SET ITEM = ? , NUMBER = ? , MEMO = ? , UPDATED_DATETIME = CAST(NOW()AS DATETIME) WHERE UUID = ?";
+				Class.forName("com.mysql.jdbc.Driver");
+				conn = DriverManager.getConnection(url , user , pass);
+				conn.setAutoCommit(false);
+				pst = conn.prepareStatement(sql);
+				pst.setString(1 , name) ;
+				pst.setInt(2 , number);
+				pst.setString(3 , memo);
+				pst.setString(4 , uuid);
+				pst.executeUpdate();
+				conn.commit();//トランザクションをコミット
+			}catch(SQLException e){
+				e.printStackTrace();
+				conn.rollback();//トランザクションのロールバック
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}finally{
+				pst.close();
+				conn.close();
+			}
 		}
-	}
+	//}
 
 	public void delete(String uuid) throws SQLException{
 		String sql = "DELETE FROM SHOPPINGLIST WHERE UUID =?";
@@ -202,7 +202,6 @@ public class ShoppingListTable {
 			e.printStackTrace();
 			conn.rollback();
 		} catch (ClassNotFoundException e) {
-			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}finally{
 			pst.close();
@@ -226,7 +225,6 @@ public class ShoppingListTable {
 			e.printStackTrace();
 			conn.rollback();
 		} catch (ClassNotFoundException e) {
-			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}finally{
 			pst.close();
