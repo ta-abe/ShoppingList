@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ShoppingListServlet extends HttpServlet{
 
-	public void doGet(HttpServletRequest req , HttpServletResponse res) throws ServletException, IOException{
+	public void doGet(HttpServletRequest req , HttpServletResponse res) throws ServletException , IOException{
 		try {
 			req.setCharacterEncoding("UTF-8");
 		}
@@ -51,11 +51,11 @@ public class ShoppingListServlet extends HttpServlet{
 		getServletConfig().getServletContext().getRequestDispatcher("/ShoppingList.jsp").forward(req , res);
 	}
 
-	public void doPost(HttpServletRequest req , HttpServletResponse res) throws ServletException, IOException{
+	public void doPost(HttpServletRequest req , HttpServletResponse res) throws ServletException , IOException{
 		try {
 			req.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
 		}
 		String uuid = null;
 		if("reg".equals(req.getParameter("btnRegister"))){ //登録
@@ -149,16 +149,18 @@ public class ShoppingListServlet extends HttpServlet{
 		}
 	}
 
-	private void updateGoods(String uuid, String name, int number, String memo) {
+	private void updateGoods(String uuid , String name , int number , String memo) {
 
 		/*  指定されたUUIDのデータを入力された値に更新し、更新日時を付与する*/
-
-		Goods goods;
-		goods = new Goods(uuid , name , number , memo);
-		ShoppingListTable tbl;
-		tbl = new ShoppingListTable();
 		try {
-			tbl.update(goods);
+			ShoppingListTable tbl;
+			tbl = new ShoppingListTable();
+			Goods goods = tbl.get(uuid);
+			String rdate = goods.getRegisteredDatetime();
+			String pdate = goods.getPurchasedDatetime();
+			String udate = goods.getUpdateDatetime();
+			Goods newgoods = new Goods(uuid , name , number , memo , rdate , pdate , udate);
+			tbl.update(newgoods);
 		}
 		catch (SQLException e)
 		{
@@ -190,8 +192,8 @@ public class ShoppingListServlet extends HttpServlet{
 			tbl = new ShoppingListTable();
 			Goods goods;
 			goods = tbl.get(uuid);
-			String a =goods.getName();
-			int b =goods.getNumber();
+			String a = goods.getName();
+			int b = goods.getNumber();
 			String c = goods.getMemo();
 			String d = goods.getRegisteredDatetime().toString();
 			String e = "pdateupdate";
@@ -203,7 +205,7 @@ public class ShoppingListServlet extends HttpServlet{
 			{
 				f = goods.getUpdateDatetime().toString();
 			}
-			Goods newgoods = new Goods(uuid ,a,b,c,d,e,f);
+			Goods newgoods = new Goods(uuid , a , b , c , d , e , f);
 			tbl.update(newgoods);
 		}
 		catch (SQLException e)

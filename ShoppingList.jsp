@@ -5,7 +5,6 @@
     <title>買い物リスト</title>
   </head>
   <body>
-    <h1>買い物リスト</h1>
     <%if(null != request.getAttribute("hidUpdateUuid")){%>
         <form method = "POST" action = "ShoppingListServlet">
           <div style = "position : absolute ; left : 10px;">商品名</div>
@@ -75,11 +74,11 @@
           int j = Integer.parseInt(s);
           for(int i = 0 ;i < j ; i++){ %>
         <tr>
-          <th><input type = "radio" value = "<%=request.getAttribute("UUID"+i)%>" name = "rdoselect">
+         <th><input type = "radio" value = "<%=request.getAttribute("UUID"+i)%>" name = "rdoselect">
           <input type = "hidden" value = "<%=request.getAttribute("UUID"+i)%>" name = "hiduuid"></th>
-          <th><input type = "text" value = "<%=request.getAttribute("name"+i)%>" name = "lblGoods<%=request.getAttribute("UUID"+i)%>" readonly></th>
-          <th><input type = "number" value = "<%=request.getAttribute("num"+i)%>" name = "lblNumber<%=request.getAttribute("UUID"+i)%>" required min = "0" max = "999"></th>
-          <th><input type = "text" value = "<%=request.getAttribute("memo"+i)%>" name = "lblMemo<%=request.getAttribute("UUID"+i)%>"></th>
+          <th><label value = "<%=request.getAttribute("name"+i)%>" name = "lblGoods<%=request.getAttribute("UUID"+i)%>"><%=request.getAttribute("name"+i)%></label></th>
+          <th><label value = "<%=request.getAttribute("num"+i)%>" name = "lblNumber<%=request.getAttribute("UUID"+i)%>"><%=request.getAttribute("num"+i)%></label></th>
+          <th><label value = "<%=request.getAttribute("memo"+i)%>" name = "lblMemo<%=request.getAttribute("UUID"+i)%>"><%=request.getAttribute("memo"+i)%></label></th>
           <th><button type = "submit" value = "<%=request.getAttribute("UUID"+i)%>" name = "btnPurchase">購入済</button></th>
         </tr>
       <%} %>
@@ -90,8 +89,8 @@
     <%}
     else
     {%>
-    <form method="GET" action="ShoppingListServlet" name ="F" >
-      <meta http-equiv="refresh" content="0;URL=http://localhost:8080/shoppinglistservlet/ShoppingListServlet">
+    <form method = "GET" action = "ShoppingListServlet" name = "F" >
+      <meta http-equiv = "refresh" content = "0;URL=http://localhost:8080/shoppinglistservlet/ShoppingListServlet">
     </form>
     <%}%>
   </body>

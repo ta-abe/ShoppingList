@@ -39,12 +39,18 @@ public class ShoppingListTable {
 				array.add(goods);
 			}
 			conn.commit();
-		}catch(SQLException e){
+		}
+		catch(SQLException e)
+		{
 			e.printStackTrace();
 			conn.rollback();
-		} catch (ClassNotFoundException e) {
+		}
+		catch (ClassNotFoundException e)
+		{
 			e.printStackTrace();
-		}finally{
+		}
+		finally
+		{
 			rs.close();
 			stm.close();
 			conn.close();
@@ -75,12 +81,18 @@ public class ShoppingListTable {
 				goods = new Goods(uuid , name , num , memo , rdate , pdate , udate);
 				array.add(goods);
 			}
-		}catch(SQLException e){
+		}
+		catch(SQLException e)
+		{
 			e.printStackTrace();
 			conn.rollback();
-		} catch (ClassNotFoundException e) {
+		}
+		catch (ClassNotFoundException e)
+		{
 			e.printStackTrace();
-		}finally{
+		}
+		finally
+		{
 			rs.close();
 			stm.close();
 			conn.close();
@@ -96,7 +108,7 @@ public class ShoppingListTable {
 		Goods goods = null;
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection(url,user,pass);
+			conn = DriverManager.getConnection(url , user , pass);
 			stm = conn.createStatement();
 			rs = stm.executeQuery(sql);
 			rs.next();
@@ -107,11 +119,17 @@ public class ShoppingListTable {
 			String pdate = rs.getString("PURCHASED_DATETIME");
 			String udate = rs.getString("UPDATED_DATETIME");
 			goods = new Goods(uuid , item , num , memo , rdate , pdate , udate);
-		}catch(SQLException e){
+		}
+		catch(SQLException e)
+		{
 			e.printStackTrace();
-		}catch(ClassNotFoundException e){
+		}
+		catch(ClassNotFoundException e)
+		{
 			e.printStackTrace();
-		}finally{
+		}
+		finally
+		{
 			rs.close();
 			stm.close();
 			conn.close();
@@ -139,12 +157,18 @@ public class ShoppingListTable {
 			pst.setString(4 , memo);
 			pst.executeUpdate();
 			conn.commit();//トランザクションをコミット
-		}catch(SQLException e){
+		}
+		catch(SQLException e)
+		{
 			e.printStackTrace();
 			conn.rollback();
-		} catch (ClassNotFoundException e) {
+		}
+		catch (ClassNotFoundException e)
+		{
 			e.printStackTrace();
-		}finally{
+		}
+		finally
+		{
 			pst.close();
 			conn.close();
 		}
@@ -168,12 +192,18 @@ public class ShoppingListTable {
 				pst.setString(1 , uuid);
 				pst.executeUpdate();
 				conn.commit();//トランザクションをコミット
-			}catch(SQLException e){
+			}
+			catch(SQLException e)
+			{
 				e.printStackTrace();
 				conn.rollback();
-			} catch (ClassNotFoundException e) {
+			}
+			catch (ClassNotFoundException e)
+			{
 				e.printStackTrace();
-			}finally{
+			}
+			finally
+			{
 				pst.close();
 				conn.close();
 			}
@@ -192,12 +222,18 @@ public class ShoppingListTable {
 				pst.setString(4 , uuid);
 				pst.executeUpdate();
 				conn.commit();//トランザクションをコミット
-			}catch(SQLException e){
+			}
+			catch(SQLException e)
+			{
 				e.printStackTrace();
 				conn.rollback();//トランザクションのロールバック
-			} catch (ClassNotFoundException e) {
+			}
+			catch (ClassNotFoundException e)
+			{
 				e.printStackTrace();
-			}finally{
+			}
+			finally
+			{
 				pst.close();
 				conn.close();
 			}
@@ -216,12 +252,18 @@ public class ShoppingListTable {
 			pst.setString(1 , uuid);
 			pst.executeUpdate();
 			conn.commit();//トランザクションをコミット
-		}catch(SQLException e){
+		}
+		catch(SQLException e)
+		{
 			e.printStackTrace();
 			conn.rollback();
-		} catch (ClassNotFoundException e) {
+		}
+		catch (ClassNotFoundException e)
+		{
 			e.printStackTrace();
-		}finally{
+		}
+		finally
+		{
 			pst.close();
 			conn.close();
 		}

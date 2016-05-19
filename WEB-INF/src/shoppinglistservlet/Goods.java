@@ -16,13 +16,6 @@ public class Goods {
 		this.memo = memo;
 	}
 
-	/*public Goods(String uuid , String name , Integer number , String memo){
-		this.uuid = uuid;
-		this.name = name;
-		this.number = number;
-		this.memo = memo;
-	}*/
-
 	public Goods(String uuid , String name , Integer number , String memo , String rdate, String pdate , String udate){
 		this.uuid = uuid;
 		this.name = name;
