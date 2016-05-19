@@ -54,7 +54,9 @@ public class ShoppingListServlet extends HttpServlet{
 	public void doPost(HttpServletRequest req , HttpServletResponse res) throws ServletException , IOException{
 		try {
 			req.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e) {
+		}
+		catch (UnsupportedEncodingException e)
+		{
 			e.printStackTrace();
 		}
 		String uuid = null;
