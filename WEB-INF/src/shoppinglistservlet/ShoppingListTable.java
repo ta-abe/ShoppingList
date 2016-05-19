@@ -1,7 +1,6 @@
 package shoppinglistservlet;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,9 +31,9 @@ public class ShoppingListTable {
 				String name = rs.getString("ITEM");
 				Integer num = rs.getInt("NUMBER");
 				String memo = rs.getString("MEMO");
-				Date rdate = rs.getDate("REGISTERED_DATETIME");
-				Date pdate = rs.getDate("PURCHASED_DATETIME");
-				Date udate = rs.getDate("UPDATED_DATETIME");
+				String rdate = rs.getString("REGISTERED_DATETIME");
+				String pdate = rs.getString("PURCHASED_DATETIME");
+				String udate = rs.getString("UPDATED_DATETIME");
 				Goods goods;
 				goods = new Goods(uuid , name , num , memo , rdate , pdate , udate);
 				array.add(goods);
@@ -69,9 +68,9 @@ public class ShoppingListTable {
 				String name = rs.getString("ITEM");
 				Integer num = rs.getInt("NUMBER");
 				String memo = rs.getString("MEMO");
-				Date rdate = rs.getDate("REGISTERED_DATETIME");
-				Date pdate = rs.getDate("PURCHASED_DATETIME");
-				Date udate = rs.getDate("UPDATED_DATETIME");
+				String rdate = rs.getString("REGISTERED_DATETIME");
+				String pdate = rs.getString("PURCHASED_DATETIME");
+				String udate = rs.getString("UPDATED_DATETIME");
 				Goods goods;
 				goods = new Goods(uuid , name , num , memo , rdate , pdate , udate);
 				array.add(goods);
@@ -104,9 +103,9 @@ public class ShoppingListTable {
 			String item = rs.getString("ITEM");
 			Integer num = rs.getInt("NUMBER");
 			String memo = rs.getString("MEMO");
-			Date rdate = rs.getDate("REGISTERED_DATETIME");
-			Date pdate = rs.getDate("PURCHASED_DATETIME");
-			Date udate = rs.getDate("UPDATED_DATETIME");
+			String rdate = rs.getString("REGISTERED_DATETIME");
+			String pdate = rs.getString("PURCHASED_DATETIME");
+			String udate = rs.getString("UPDATED_DATETIME");
 			goods = new Goods(uuid , item , num , memo , rdate , pdate , udate);
 		}catch(SQLException e){
 			e.printStackTrace();
@@ -159,9 +158,28 @@ public class ShoppingListTable {
 		String uuid = goods.getUuid();
 		Connection conn = null;
 		PreparedStatement pst = null;
-		/*if(){
-
-		}else{*/
+		if("pdateupdate" == goods.getPurchasedDatetime()){
+			String sql = "UPDATE SHOPPINGLIST SET PURCHASED_DATETIME = CAST(NOW()AS DATETIME) WHERE UUID =?";
+			try{
+				Class.forName("com.mysql.jdbc.Driver");
+				conn = DriverManager.getConnection(url , user , pass);
+				conn.setAutoCommit(false);
+				pst = conn.prepareStatement(sql);
+				pst.setString(1 , uuid);
+				pst.executeUpdate();
+				conn.commit();//トランザクションをコミット
+			}catch(SQLException e){
+				e.printStackTrace();
+				conn.rollback();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}finally{
+				pst.close();
+				conn.close();
+			}
+		}
+		else
+		{
 			try{
 				String sql = "UPDATE SHOPPINGLIST SET ITEM = ? , NUMBER = ? , MEMO = ? , UPDATED_DATETIME = CAST(NOW()AS DATETIME) WHERE UUID = ?";
 				Class.forName("com.mysql.jdbc.Driver");
@@ -184,33 +202,10 @@ public class ShoppingListTable {
 				conn.close();
 			}
 		}
-	//}
+	}
 
 	public void delete(String uuid) throws SQLException{
 		String sql = "DELETE FROM SHOPPINGLIST WHERE UUID =?";
-		Connection conn = null;
-		PreparedStatement pst = null;
-		try{
-			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection(url , user , pass);
-			conn.setAutoCommit(false);
-			pst = conn.prepareStatement(sql);
-			pst.setString(1 , uuid);
-			pst.executeUpdate();
-			conn.commit();//トランザクションをコミット
-		}catch(SQLException e){
-			e.printStackTrace();
-			conn.rollback();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}finally{
-			pst.close();
-			conn.close();
-		}
-	}
-
-	public void purchase(String uuid) throws SQLException{
-		String sql = "UPDATE SHOPPINGLIST SET PURCHASED_DATETIME = CAST(NOW()AS DATETIME) WHERE UUID =?";
 		Connection conn = null;
 		PreparedStatement pst = null;
 		try{

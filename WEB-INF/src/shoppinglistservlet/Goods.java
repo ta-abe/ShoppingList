@@ -1,15 +1,13 @@
 package shoppinglistservlet;
 
-import java.sql.Date;
-
 public class Goods {
 	private  String uuid = null;
 	private String name = null;
 	private Integer number = null;
 	private String memo = null;
-	private Date registeredDatetime = null;
-	private Date purchasedDatetime = null;
-	private Date updateDatetime = null;
+	private String registeredDatetime = null;
+	private String purchasedDatetime = null;
+	private String updateDatetime = null;
 
 	public Goods(String name , Integer number , String memo){
 		this.uuid = java.util.UUID.randomUUID().toString();
@@ -18,14 +16,14 @@ public class Goods {
 		this.memo = memo;
 	}
 
-	public Goods(String uuid , String name , Integer number , String memo){
+	/*public Goods(String uuid , String name , Integer number , String memo){
 		this.uuid = uuid;
 		this.name = name;
 		this.number = number;
 		this.memo = memo;
-	}
+	}*/
 
-	public Goods(String uuid , String name , Integer number , String memo , Date rdate, Date pdate , Date udate){
+	public Goods(String uuid , String name , Integer number , String memo , String rdate, String pdate , String udate){
 		this.uuid = uuid;
 		this.name = name;
 		this.number = number;
@@ -51,15 +49,15 @@ public class Goods {
 		return memo;
 	}
 
-	public Date getRegisteredDatetime(){
+	public String getRegisteredDatetime(){
 		return registeredDatetime;
 	}
 
-	public Date getPurchasedDatetime(){
+	public String getPurchasedDatetime(){
 		return purchasedDatetime;
 	}
 
-	public Date getUpdateDatetime(){
+	public String getUpdateDatetime(){
 		return updateDatetime;
 	}
 }
