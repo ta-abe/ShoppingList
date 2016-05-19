@@ -33,7 +33,7 @@ public class ShoppingListServlet extends HttpServlet{
 				req.setAttribute("memo"+i , list.get(i).getMemo());
 			}
 			list.size();
-			req.setAttribute("size", list.size());
+			req.setAttribute("size" , list.size());
 			getServletConfig().getServletContext().getRequestDispatcher("/ShoppingList.jsp").forward(req , res);
 		}
 		catch (SQLException e)
@@ -107,7 +107,7 @@ public class ShoppingListServlet extends HttpServlet{
 						req.setAttribute("memo"+i , list.get(i).getMemo());
 					}
 					list.size();
-					req.setAttribute("size", list.size());
+					req.setAttribute("size" , list.size());
 					getServletConfig().getServletContext().getRequestDispatcher("/ShoppingList.jsp").forward(req , res);
 				}
 				catch (SQLException e)
