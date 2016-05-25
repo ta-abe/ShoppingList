@@ -20,8 +20,8 @@ public class ShoppingListTable {
 	String pass = "8121";
 
 	/**
-	 * 登録されているすべてのデータを取得し、List<Goods>に入れて返します
-	 * @return List<Goods>
+	 * 登録されているすべてのデータを取得し、Listに入れて返します
+	 * @return 全てのデータをList<Goods\>に入れた結果
 	 * @throws SQLException
 	 */
 	public List<Goods> getAll() throws SQLException{
@@ -77,7 +77,7 @@ public class ShoppingListTable {
 	/**
 	 * 登録されているデータの中で、購入済みではないものを取得し、
 	 * List<Goods>に入れて返します
-	 * @return List<Goods>
+	 * @return 購入済みでないデータをList<Goods>に入れた結果
 	 * @throws SQLException
 	 */
 	public List<Goods> getAllYetPurchased() throws SQLException{
@@ -131,7 +131,7 @@ public class ShoppingListTable {
 	/**
 	 * 引数に指定されたUUIDに一致するデータを取得し
 	 * Goodsクラスのオブジェクトを返します
-	 * @param uuid
+	 * @param uuid 指定されたUUID
 	 * @return Goodsクラスのオブジェクト
 	 * @throws SQLException
 	 */
@@ -180,8 +180,8 @@ public class ShoppingListTable {
 
 	/**
 	 * Goodsクラスのオブジェクトを引数で取得し、そこから値を取出し新たなデータとして登録する
-	 * @param goods
-	 * @return　Goodsクラスのオブジェクト
+	 * @param goods 新規登録したいデータ
+	 * @return Goodsクラスのオブジェクト
 	 * @throws SQLException
 	 */
 	public Goods add(Goods goods) throws SQLException{
@@ -228,7 +228,7 @@ public class ShoppingListTable {
 	/**
 	 * 更新で入力されたデータをGoodsオブジェクトで取得し、
 	 * データを更新する
-	 * @param goods
+	 * @param goods 更新したいデータ
 	 * @throws SQLException
 	 */
 	public void update(Goods goods) throws SQLException{
@@ -306,7 +306,7 @@ public class ShoppingListTable {
 
 	/**
 	 * 引数で取得したUUIDに対応するデータを削除します
-	 * @param uuid
+	 * @param uuid 指定したUUID
 	 * @throws SQLException
 	 */
 	public void delete(String uuid) throws SQLException{

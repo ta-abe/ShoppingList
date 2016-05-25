@@ -142,9 +142,9 @@ public class ShoppingListServlet extends HttpServlet{
 
 	/**
 	 * 入力された値を引数として受け取り新しいデータとして登録します
-	 * @param name
-	 * @param number
-	 * @param memo
+	 * @param name 名前に入力された文字列
+	 * @param number 個数で指定された数値
+	 * @param memo メモで入力された文字列
 	 */
 	private void registerGoods(String name , int number , String memo){
 		Goods goods;
@@ -162,10 +162,10 @@ public class ShoppingListServlet extends HttpServlet{
 	/**
 	 * 指定されたUUIDに対応するデータを入力された値に更新し、
 	 * 更新日時に現在の時刻を付与します
-	 * @param uuid
-	 * @param name
-	 * @param number
-	 * @param memo
+	 * @param uuid 更新したい要素のUUID
+	 * @param name 更新したい名前
+	 * @param number 更新したい個数
+	 * @param memo 更新したいメモ
 	 */
 	private void updateGoods(String uuid , String name , int number , String memo) {
 		try {
@@ -186,7 +186,7 @@ public class ShoppingListServlet extends HttpServlet{
 
 	/**
 	 * 引数に指定されたUUIDのデータを削除します
-	 * @param uuid
+	 * @param uuid 削除したい要素のUUID
 	 */
 	private void deleteGoods(String uuid){
 		try {
@@ -202,7 +202,7 @@ public class ShoppingListServlet extends HttpServlet{
 
 	/**
 	 * 引数に指定されたUUIDのデータに現時刻を購入日時として付与します
-	 * @param uuid
+	 * @param uuid 購入済みに変更したい要素のUUID
 	 */
 	private void purchaseGoods(String uuid) {
 		try {

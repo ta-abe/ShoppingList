@@ -15,11 +15,11 @@ public class Goods {
 	private String updateDatetime = null;
 
 	/**
-	 * 引数で入れよくされたデータを取得し、UUIDをランダムで決定、
+	 * 引数で入力されたデータを取得し、UUIDをランダムで決定、
 	 * フィールドに各値を代入します
-	 * @param name
-	 * @param number
-	 * @param memo
+	 * @param name 名前に入力された文字列
+	 * @param number 個数で入力した数値
+	 * @param memo メモで入力した文字列
 	 */
 	public Goods(String name , Integer number , String memo){
 		this.uuid = java.util.UUID.randomUUID().toString();
@@ -30,13 +30,13 @@ public class Goods {
 
 	/**
 	 * 引数でパラメータを取得し、各値をフィールドに代入します
-	 * @param uuid
-	 * @param name
-	 * @param number
-	 * @param memo
-	 * @param rdate
-	 * @param pdate
-	 * @param udate
+	 * @param uuid 取得したUUID
+	 * @param name 取得した名前
+	 * @param number 取得した個数
+	 * @param memo 取得したメモ
+	 * @param rdate 取得した登録日時
+	 * @param pdate 取得した購入日時
+	 * @param udate 取得した更新日時
 	 */
 	public Goods(String uuid , String name , Integer number , String memo , String rdate, String pdate , String udate){
 		this.uuid = uuid;
