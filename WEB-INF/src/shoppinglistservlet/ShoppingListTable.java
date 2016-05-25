@@ -9,11 +9,21 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author excite
+ *
+ */
 public class ShoppingListTable {
 	String url = "jdbc:mysql://localhost:3306/sample";
 	String user = "root";
 	String pass = "8121";
 
+	/**
+	 * 登録されているすべてのデータを取得し、List<Goods>に入れて返します
+	 * @return List<Goods>
+	 * @throws SQLException
+	 */
 	public List<Goods> getAll() throws SQLException{
 		String sql = "SELECT * FROM SHOPPINGLIST ORDER BY REGISTERED_DATETIME DESC";
 		Connection conn = null;
@@ -51,15 +61,27 @@ public class ShoppingListTable {
 		}
 		finally
 		{
-			rs.close();
-			stm.close();
-			conn.close();
+			if(rs != null){
+				rs.close();
+			}
+			if(stm != null){
+				stm.close();
+			}
+			if(conn != null){
+				conn.close();
+			}
 		}
 		return array;
 	}
 
+	/**
+	 * 登録されているデータの中で、購入済みではないものを取得し、
+	 * List<Goods>に入れて返します
+	 * @return List<Goods>
+	 * @throws SQLException
+	 */
 	public List<Goods> getAllYetPurchased() throws SQLException{
-		String sql = "select * from shoppinglist where PURCHASED_DATETIME  is null order by REGISTERED_DATETIME desc";
+		String sql = "SELECT * FROM SHOPPINGLIST WHERE PURCHASED_DATETIME  IS NULL ORDER BY REGISTERED_DATETIME DESC";
 		Connection conn = null;
 		Statement stm = null;
 		ResultSet rs = null;
@@ -93,13 +115,26 @@ public class ShoppingListTable {
 		}
 		finally
 		{
-			rs.close();
-			stm.close();
-			conn.close();
+			if(rs != null){
+				rs.close();
+			}
+			if(stm != null){
+				stm.close();
+			}
+			if(conn != null){
+				conn.close();
+			}
 		}
 		return array;
 	}
 
+	/**
+	 * 引数に指定されたUUIDに一致するデータを取得し
+	 * Goodsクラスのオブジェクトを返します
+	 * @param uuid
+	 * @return Goodsクラスのオブジェクト
+	 * @throws SQLException
+	 */
 	public Goods get(String uuid) throws SQLException{
 		String sql = "SELECT * FROM SHOPPINGLIST WHERE UUID = '" + uuid + "'";
 		Connection conn = null;
@@ -130,13 +165,25 @@ public class ShoppingListTable {
 		}
 		finally
 		{
-			rs.close();
-			stm.close();
-			conn.close();
+			if(rs != null){
+				rs.close();
+			}
+			if(stm != null){
+				stm.close();
+			}
+			if(conn != null){
+				conn.close();
+			}
 		}
 		return goods;
 	}
 
+	/**
+	 * Goodsクラスのオブジェクトを引数で取得し、そこから値を取出し新たなデータとして登録する
+	 * @param goods
+	 * @return　Goodsクラスのオブジェクト
+	 * @throws SQLException
+	 */
 	public Goods add(Goods goods) throws SQLException{
 		String uuid = goods.getUuid();
 		String name = goods.getName();
@@ -145,7 +192,6 @@ public class ShoppingListTable {
 		String sql = "INSERT INTO SHOPPINGLIST(UUID , ITEM , NUMBER , MEMO , REGISTERED_DATETIME)VALUES(? , ? , ? , ? , CAST(NOW() AS DATETIME))";
 		Connection conn = null;
 		PreparedStatement pst = null;
-
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url , user , pass);
@@ -169,12 +215,22 @@ public class ShoppingListTable {
 		}
 		finally
 		{
-			pst.close();
-			conn.close();
+			if(pst != null){
+				pst.close();
+			}
+			if(conn != null){
+				conn.close();
+			}
 		}
 		return goods;
 	}
 
+	/**
+	 * 更新で入力されたデータをGoodsオブジェクトで取得し、
+	 * データを更新する
+	 * @param goods
+	 * @throws SQLException
+	 */
 	public void update(Goods goods) throws SQLException{
 		String name = goods.getName();
 		Integer number = goods.getNumber();
@@ -204,8 +260,12 @@ public class ShoppingListTable {
 			}
 			finally
 			{
-				pst.close();
-				conn.close();
+				if(pst != null){
+					pst.close();
+				}
+				if(conn != null){
+					conn.close();
+				}
 			}
 		}
 		else
@@ -234,12 +294,21 @@ public class ShoppingListTable {
 			}
 			finally
 			{
-				pst.close();
-				conn.close();
+				if(pst != null){
+					pst.close();
+				}
+				if(conn != null){
+					conn.close();
+				}
 			}
 		}
 	}
 
+	/**
+	 * 引数で取得したUUIDに対応するデータを削除します
+	 * @param uuid
+	 * @throws SQLException
+	 */
 	public void delete(String uuid) throws SQLException{
 		String sql = "DELETE FROM SHOPPINGLIST WHERE UUID =?";
 		Connection conn = null;
@@ -264,8 +333,12 @@ public class ShoppingListTable {
 		}
 		finally
 		{
-			pst.close();
-			conn.close();
+			if(pst != null){
+				pst.close();
+			}
+			if(conn != null){
+				conn.close();
+			}
 		}
 	}
 }
