@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author t-abe
+ * @author excite
  */
 
 public class ShoppingListServlet extends HttpServlet{
