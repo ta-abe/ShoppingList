@@ -38,7 +38,8 @@
           s = size.toString();
           int j = Integer.parseInt(s);%>
     <form method = "POST" action= "ShoppingListServlet">
-      <table border = "1" width = "800">
+    <div style = "height:200px; width:900px; overflow-y:scroll">
+      <table border = "1" >
         <tr>
           <th></th>
           <th>商品名</th>
@@ -47,21 +48,22 @@
         </tr>
          <% for(int i = 0 ;i < j ; i++){ %>
         <tr>
-          <th><input type = "radio" value = "<%=request.getAttribute("UUID"+i)%>" name = "rdoselect">
+          <th width = "30"><input type = "radio" value = "<%=request.getAttribute("UUID"+i)%>" name = "rdoselect">
           <input type = "hidden" value = "<%=request.getAttribute("UUID"+i)%>" name = "hiduuid"></th>
-          <th><label value = "<%=request.getAttribute("name"+i)%>" name = "lblGoods<%=request.getAttribute("UUID"+i)%>"><%=request.getAttribute("name"+i)%></label></th>
-          <th><label value = "<%=request.getAttribute("num"+i)%>" name = "lblNumber<%=request.getAttribute("UUID"+i)%>"><%=request.getAttribute("num"+i)%></label></th>
-          <th><label value = "<%=request.getAttribute("memo"+i)%>" name = "lblMemo<%=request.getAttribute("UUID"+i)%>"><%=request.getAttribute("memo"+i)%></label></th>
-          <th><button type = "submit" value = "<%=request.getAttribute("UUID"+i)%>" name = "btnPurchase">購入済</button></th>
+          <th width = "250"><label value = "<%=request.getAttribute("name"+i)%>" name = "lblGoods<%=request.getAttribute("UUID"+i)%>"><%=request.getAttribute("name"+i)%></label></th>
+          <th width = "70"><label value = "<%=request.getAttribute("num"+i)%>" name = "lblNumber<%=request.getAttribute("UUID"+i)%>"><%=request.getAttribute("num"+i)%></label></th>
+          <th width = "400"><label value = "<%=request.getAttribute("memo"+i)%>" name = "lblMemo<%=request.getAttribute("UUID"+i)%>"><%=request.getAttribute("memo"+i)%></label></th>
+          <th width = "80"><button type = "submit" value = "<%=request.getAttribute("UUID"+i)%>" name = "btnPurchase">購入済</button></th>
         </tr>
       <%} %>
       </table>
+      </div>
       <button type = "submit" value = "upd" name = "btnUpdate">修正</button>
       <button type = "submit" value = "del"name = "btnDelete">削除</button>
     </form>
     <%}else if(null != request.getAttribute("hidUpdateUuid")){%>
     <form method = "POST" action= "ShoppingListServlet">
-      <table border = "1" width = "800">
+      <table border = "1" >
         <tr>
           <th></th>
           <th>商品名</th>
@@ -74,12 +76,12 @@
           int j = Integer.parseInt(s);
           for(int i = 0 ;i < j ; i++){ %>
         <tr>
-         <th><input type = "radio" value = "<%=request.getAttribute("UUID"+i)%>" name = "rdoselect">
+         <th width = "30"><input type = "radio" value = "<%=request.getAttribute("UUID"+i)%>" name = "rdoselect">
           <input type = "hidden" value = "<%=request.getAttribute("UUID"+i)%>" name = "hiduuid"></th>
-          <th><label value = "<%=request.getAttribute("name"+i)%>" name = "lblGoods<%=request.getAttribute("UUID"+i)%>"><%=request.getAttribute("name"+i)%></label></th>
-          <th><label value = "<%=request.getAttribute("num"+i)%>" name = "lblNumber<%=request.getAttribute("UUID"+i)%>"><%=request.getAttribute("num"+i)%></label></th>
-          <th><label value = "<%=request.getAttribute("memo"+i)%>" name = "lblMemo<%=request.getAttribute("UUID"+i)%>"><%=request.getAttribute("memo"+i)%></label></th>
-          <th><button type = "submit" value = "<%=request.getAttribute("UUID"+i)%>" name = "btnPurchase">購入済</button></th>
+          <th width = "250"><label value = "<%=request.getAttribute("name"+i)%>" name = "lblGoods<%=request.getAttribute("UUID"+i)%>"><%=request.getAttribute("name"+i)%></label></th>
+          <th width = "70"><label value = "<%=request.getAttribute("num"+i)%>" name = "lblNumber<%=request.getAttribute("UUID"+i)%>"><%=request.getAttribute("num"+i)%></label></th>
+          <th width = "400"><label value = "<%=request.getAttribute("memo"+i)%>" name = "lblMemo<%=request.getAttribute("UUID"+i)%>"><%=request.getAttribute("memo"+i)%></label></th>
+          <th width = "80"><button type = "submit" value = "<%=request.getAttribute("UUID"+i)%>" name = "btnPurchase">購入済</button></th>
         </tr>
       <%} %>
       </table>
